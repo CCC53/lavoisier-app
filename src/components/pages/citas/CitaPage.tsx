@@ -44,6 +44,10 @@ export const CitaPage = () => {
       });
     }
   }
+
+  const goBack = () => {
+    navigate('/citas');
+  }
   
   useEffect(() => {
     if (id && id !== 'nuevo') {
@@ -60,6 +64,9 @@ export const CitaPage = () => {
     <div className='container'>
       <h1>Cita</h1>
       <hr/>
+      <Button color='danger' onClick={goBack}>
+        <i className="fa fa-arrow-left"></i> Regresar
+      </Button>
       <div className="form">
         <Form onSubmit={handleSubmit}>
           <Row>

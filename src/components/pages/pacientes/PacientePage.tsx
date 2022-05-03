@@ -7,6 +7,7 @@ import { DynamicTable } from '../../ui/DynamicTable';
 import { Cita } from '../../../types/cita';
 import { DynamicTableContent } from '../../../types/ui';
 import Swal from 'sweetalert2';
+import { NoDataMessage } from '../../ui/NoDataMessage';
 
 const formatTable = (citas: Cita[]) => {
   return citas.map(({ fecha, horario, motivo }, index) => (
@@ -55,18 +56,10 @@ export const PacientePage = () => {
       timer: 1500
     });
   }
-  
-  useEffect(() => {
-    if (id && id !== 'nuevo') {
-      getPacienteByID(id).then(res => {
-        if (res) {
-          const { nombre, nacimiento, email, sexo, telefono, citas } = res;
-          loadData({ nombre, nacimiento, sexo, telefono, email });
-          setCitas(citas);
-        }
-      });
-    }
-  }, [id]);
+
+  const goBack = () => {
+    navigate('/pacientes');
+  }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -86,10 +79,25 @@ export const PacientePage = () => {
     }
   }
   
+  useEffect(() => {
+    if (id && id !== 'nuevo') {
+      getPacienteByID(id).then(res => {
+        if (res) {
+          const { nombre, nacimiento, email, sexo, telefono, citas } = res;
+          loadData({ nombre, nacimiento, sexo, telefono, email });
+          setCitas(citas);
+        }
+      });
+    }
+  }, [id]);
+  
   return (
     <div className='container'>
       <h1>{ id !== 'nuevo' ? `${nombre}` : 'Nuevo paciente' }</h1>
       <hr/>
+      <Button color='danger' onClick={goBack}>
+        <i className="fa fa-arrow-left"></i> Regresar
+      </Button>
       <div className="form">
         <Form onSubmit={handleSubmit}>
           <Row>
@@ -139,7 +147,9 @@ export const PacientePage = () => {
           <div className='citasContainer'>
             <h1>Historial de citas</h1>
             <hr/>
-            <DynamicTable headers={headers} rows={rows} />
+            {
+              citas.length === 0 ? <NoDataMessage/> : <DynamicTable headers={headers} rows={rows} />
+            }
           </div>
         )
       }

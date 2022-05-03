@@ -6,6 +6,8 @@ import { getAllCitas, deleteCita } from '../../../helpers/cita';
 import { Cita } from '../../../types/cita';
 import { DynamicTableContent } from '../../../types/ui';
 import Swal from 'sweetalert2';
+import { NoDataMessage } from '../../ui/NoDataMessage';
+import { LoadingMessage } from '../../ui/LoadingMessage';
 
 const formatTable = (rows: Cita[], navigate: (id: string) => void, deleteAction: (id: string) => void): JSX.Element[] => {
   return rows.map(({fecha, horario, id, motivo}, index) => (
@@ -40,6 +42,7 @@ export const CitasPage = () => {
 
   const navigate = useNavigate();
   const [citas, setCitas] = useState<Cita[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   
   const navigateToCita = (id: string) => {
     navigate(`/citas/${id}`);
@@ -76,7 +79,14 @@ export const CitasPage = () => {
   const { headers, rows } = setTableData(citas, navigateToCita, deleteButton);
   
   useEffect(() => {
-    getAllCitas().then(res => res && setCitas(res));
+    getAllCitas().then(res => {
+      if (res) {
+        setTimeout(() => {
+          setCitas(res);
+          setLoading(false);
+        }, 200);
+      }
+    });
   }, []);
   
   return (
@@ -84,7 +94,9 @@ export const CitasPage = () => {
       <h1>Citas</h1>
       <hr/>
       <Button color="primary" onClick={navigateToNew}>Agregar</Button>
-      <DynamicTable headers={headers} rows={rows}/>
+      {
+        loading ? <LoadingMessage/> : citas.length === 0 ? <NoDataMessage/> : <DynamicTable headers={headers} rows={rows}/>
+      }
     </div>
   )
 }

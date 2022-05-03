@@ -6,6 +6,8 @@ import { DynamicTable } from '../../ui/DynamicTable';
 import { useNavigate } from 'react-router-dom';
 import { deletePaciente, getPacientes } from '../../../helpers/paciente';
 import { Paciente } from '../../../types/paciente';
+import { NoDataMessage } from '../../ui/NoDataMessage';
+import { LoadingMessage } from '../../ui/LoadingMessage';
 
 const formatTable = (rows: Paciente[], navigate: (id: string) => void, deleteAction: (id: string) => void): JSX.Element[] => {
   return rows.map(({email, nombre, id, telefono}, index) => (
@@ -39,6 +41,7 @@ const setTableData = (data: Paciente[], navigate: (id: string) => void, deleteAc
 export const PacientesPage = () => {
   const navigate = useNavigate();
   const [pacientes, setPacientes] = useState<Paciente[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const navigateToPaciente = (id: string): void => {
     navigate(`/pacientes/${id}`);
@@ -75,7 +78,14 @@ export const PacientesPage = () => {
   const { headers, rows } = setTableData(pacientes, navigateToPaciente, deleteButton);
 
   useEffect(() => {
-    getPacientes().then(res => res && setPacientes(res));
+    getPacientes().then(res => {
+      if (res) {
+        setTimeout(() => {
+          setPacientes(res);
+          setLoading(false);
+        }, 200);
+      }
+    });
   }, [])
   
   return (
@@ -83,7 +93,9 @@ export const PacientesPage = () => {
       <h1>Pacientes</h1>
       <hr/>
       <Button color="primary" onClick={navigateToNew}>Agregar</Button>
-      <DynamicTable headers={headers} rows={rows}/>
+      {
+        loading ? <LoadingMessage/> : pacientes.length === 0 ? <NoDataMessage/> : <DynamicTable headers={headers} rows={rows}/>
+      }
     </div>
   )
 }
