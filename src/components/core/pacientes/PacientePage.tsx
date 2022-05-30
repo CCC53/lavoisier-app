@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import { addPaciente, getPacienteByID, updatePaciente } from '../../../helpers/paciente';
 import { useForm } from '../../../hooks/useForm';
@@ -36,6 +36,8 @@ const setTableData = (data: Cita[]) => {
 export const PacientePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [ , rol, ruta, ] = pathname.split('/');
   const [citas, setCitas] = useState<Cita[]>([]);
   const [formValues, handleInputChange, loadData] = useForm({
     nombre: '',
@@ -58,7 +60,7 @@ export const PacientePage = () => {
   }
 
   const goBack = () => {
-    navigate('/pacientes');
+    navigate(`/${rol}/${ruta}`);
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -73,7 +75,7 @@ export const PacientePage = () => {
       addPaciente(formValues).then(res => {
         if (res) {
           displayMessage('Paciente registrado correctamente');
-          navigate(`/pacientes/${res.id}`);
+          navigate(`/${rol}/${ruta}/${res.id}`);
         }
       });
     }

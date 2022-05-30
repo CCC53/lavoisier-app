@@ -1,17 +1,26 @@
 @import url('bootstrap/dist/css/bootstrap.min.css');
 
+ul {
+    margin-left: -2em;
+    a {
+        font-size: 1.3em !important;
+        list-style: none;
+    }
+}
+
 .link {
-    color: rgb(153, 143, 143);
+    color: black;
     font-size: 17px;
     text-decoration: none;
 }
 
 .link:hover {
-    color: rgb(218, 201, 201);
+    color: black;
+    text-decoration: underline;
 }
 
 .active {
-    color: white;
+    color: #188754;
     font-size: 17px;
     text-decoration: none;
 }
@@ -40,4 +49,43 @@ h1 {
     align-items: center;
     display: flex;
     flex-direction: column;
+}
+
+.auth {
+    align-items: center;
+    background-color: #188754;
+    display: flex;
+    justify-content: center;
+    margin: 0px;
+    height: 100vh;
+    width: 100vw;
+}
+
+.authContainer {
+    background-color: white;
+    box-shadow: 0px 3px #363636;
+    border-radius: 2px;
+    padding: 20px;
+    width: 350px;
+}
+
+.accountLink {
+    color: #363636;
+    text-decoration: none;
+    &:hover {
+        color: #363636;
+        text-decoration: underline;
+    }
+}
+
+.navbar {
+    .menuIcon {
+        cursor: pointer;
+        margin-right: 1em;
+        width: 2.5em;
+    }
+}
+
+.logoutButton {
+    margin-top: 40em;
 }

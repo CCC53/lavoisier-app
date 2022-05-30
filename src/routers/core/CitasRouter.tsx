@@ -1,13 +1,13 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
-import { CitaPage } from '../components/pages/citas/CitaPage'
-import { CitasPage } from '../components/pages/citas/CitasPage'
+import { CitaPage } from '../../components/core/citas/CitaPage'
+import { CitasPage } from '../../components/core/citas/CitasPage'
 
 export const CitasRouter = () => {
   return (
     <Routes>
         <Route path='/' element={<CitasPage/>}/>
-        <Route path='/:id' element={<CitaPage/>}/>
+        <Route path=':id' element={<CitaPage/>}/>
         <Route path='*' element={<Navigate to={'/'}/>}/>
     </Routes>
   )

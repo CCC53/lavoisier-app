@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import { DynamicTable } from '../../ui/DynamicTable';
 import { getAllCitas, deleteCita } from '../../../helpers/cita';
@@ -41,15 +41,16 @@ const setTableData = (data: Cita[], navigate: (id: string) => void, deleteAction
 export const CitasPage = () => {
 
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [citas, setCitas] = useState<Cita[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   
   const navigateToCita = (id: string) => {
-    navigate(`/citas/${id}`);
+    navigate(`${pathname}/${id}`);
   }
 
-  const navigateToNew = async() => {
-    navigate('/citas/nuevo');
+  const navigateToNew = () => {
+    navigate(`${pathname}/nuevo`);
   }
 
   const deleteButton = (id: string) => {
@@ -64,13 +65,16 @@ export const CitasPage = () => {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        setCitas(citas.filter(item => item.id !== id));
         deleteCita(id).then(res => {
-          Swal.fire(
-            'Eliminado',
-            'Este registro ha sido eliminado',
-            'success'
-          )
+          Swal.fire({
+            title: 'Eliminado',
+            text: 'Este registro ha sido eliminado',
+            icon: 'success'
+          }).then((result) => {
+            if(result.isConfirmed) {
+              setCitas(citas.filter(item => item.id !== id));
+            }
+          })
         });
       }
     })

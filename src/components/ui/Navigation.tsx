@@ -1,41 +1,60 @@
 import React, { useState } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
-import { Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem } from 'reactstrap';
+import { useNavigate, NavLink, useLocation } from 'react-router-dom';
+import { Button, Navbar, NavbarBrand, Offcanvas, OffcanvasBody, OffcanvasHeader } from 'reactstrap';
 import { NavRoute } from '../../types/ui';
+import { initLogout } from '../../helpers/auth';
+
 
 export const Navigation = () => {
 
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState<boolean>(true);
-  const toggleNav = () => {
+  const { pathname } = useLocation();
+  const [, rol, ] = pathname.split('/');
+  const [collapsed, setCollapsed] = useState<boolean>(false);
+
+  const toggleMenu = () => {
     setCollapsed(!collapsed);
   }
 
   const navigateToMainView = () => {
-    navigate('/');
+    navigate(`/${rol}/citas`);
   }
 
-  const navLinks: NavRoute[] = [
-    { text: 'Pacientes', route: '/pacientes' },
-    { text: 'Citas', route: '/citas' }
+  const handleLogout = () => {
+    initLogout();
+    window.location.reload();
+  }
+
+  const generalLinks: NavRoute[] = [
+    { text: 'Pacientes', route: `/${rol}/pacientes` },
+    { text: 'Citas', route: `/${rol}/citas` },
   ];
 
+  const navLinks: NavRoute[] = rol === 'nutriologo' ? [...generalLinks, { text: 'Historial Clinico', route: `/${rol}/historial-clinico` }]
+                              : [...generalLinks, { text: 'Pagos', route: `/${rol}/pagos` }];
+ 
   return (
     <div>
       <Navbar color="success" dark>
-        <NavbarBrand onClick={navigateToMainView} className="brand">Centro Nutricional Lavoisier</NavbarBrand>
-        <NavbarToggler onClick={toggleNav} />
-        <Collapse navbar isOpen={!collapsed}>
-          <Nav navbar>
+        <div className='navbar'>
+          <img src={'/assets/menu.svg'} className='menuIcon' onClick={toggleMenu} alt=''/>
+          <NavbarBrand onClick={navigateToMainView} className="brand">Centro Nutricional Lavoisier</NavbarBrand>
+        </div>
+        <Offcanvas isOpen={collapsed} toggle={toggleMenu} fade={true} backdrop={true} scrollable={false}>
+          <OffcanvasHeader toggle={toggleMenu}>
+            Centro Nutricional Lavoisier
+          </OffcanvasHeader>
+          <OffcanvasBody>
             {
               navLinks.map(({ route, text }, index) => (
-                <NavItem key={index}>
+                <ul key={index}>
                   <NavLink to={route} className={({isActive}) => `link ${isActive && "active"}`}>{text}</NavLink>
-                </NavItem>
+                </ul>
               ))
             }
-          </Nav>
-        </Collapse>
+            <Button className='logoutButton' color='danger' onClick={handleLogout}>Salir</Button>
+          </OffcanvasBody>
+        </Offcanvas>
       </Navbar>
     </div>
   )

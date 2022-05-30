@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Button, Input, Form, Row, Col, FormGroup, Label } from 'reactstrap';
 import { useForm } from '../../../hooks/useForm';
 import { useFetchPacientes } from '../../../hooks/useFetchPacientes';
@@ -9,6 +9,8 @@ import Swal from 'sweetalert2';
 export const CitaPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [ , rol, ruta, ] = pathname.split('/');
   const [formValues, handleInputChange, loadData] = useForm({
     motivo: '',
     fecha: '',
@@ -46,7 +48,7 @@ export const CitaPage = () => {
   }
 
   const goBack = () => {
-    navigate('/citas');
+    navigate(`/${rol}/${ruta}`);
   }
   
   useEffect(() => {

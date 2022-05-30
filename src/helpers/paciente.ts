@@ -1,12 +1,17 @@
 import axios from "axios";
 import { SelectItem } from "../types/ui";
 import { AddPacienteResponse, GetPacienteResponse, PacienteDeletedResponse, PacientesResponse, PacienteUpdateResponse, Paciente, PacientePopulated } from '../types/paciente';
+import { token } from "./cita";
 
 export const apiUrl = 'http://localhost:3001';
 
 export const getPacientes = async(): Promise<Paciente[] | undefined> => {
     try {
-        const { data } = await axios.get(`${apiUrl}/api/pacientes`);
+        const { data } = await axios.get(`${apiUrl}/api/pacientes`, {
+            headers: {
+                authorization: token ? token : ''
+            }
+        });
         const { pacientes } = data as PacientesResponse;
         return pacientes;
     } catch (error) {
@@ -31,7 +36,11 @@ export const getPacientesSelect = async(): Promise<SelectItem[] | undefined> => 
 
 export const deletePaciente = async(id: string): Promise<boolean | undefined> => {
     try {
-        const { data } = await axios.delete(`${apiUrl}/api/pacientes/${id}`);
+        const { data } = await axios.delete(`${apiUrl}/api/pacientes/${id}`, {
+            headers: {
+                authorization: token ? token : ''
+            }
+        });
         const { deleted } = data as PacienteDeletedResponse;
         return deleted;
     } catch (error) {
@@ -42,7 +51,11 @@ export const deletePaciente = async(id: string): Promise<boolean | undefined> =>
 
 export const getPacienteByID = async(id: string): Promise<PacientePopulated | undefined> => {
     try {
-        const { data } = await axios.get(`${apiUrl}/api/pacientes/${id}`);
+        const { data } = await axios.get(`${apiUrl}/api/pacientes/${id}`, {
+            headers: {
+                authorization: token ? token : ''
+            }
+        });
         const { paciente } = data as GetPacienteResponse;
         return paciente;
     } catch (error) {
@@ -53,7 +66,11 @@ export const getPacienteByID = async(id: string): Promise<PacientePopulated | un
 
 export async function addPaciente<T>(formValues: T): Promise<Paciente | undefined> {
     try {
-        const { data } = await axios.post(`${apiUrl}/api/pacientes`, formValues);
+        const { data } = await axios.post(`${apiUrl}/api/pacientes`, formValues, {
+            headers: {
+                authorization: token ? token : ''
+            }
+        });
         const { paciente } = data as AddPacienteResponse;
         return paciente;
     } catch (error) {
@@ -64,7 +81,11 @@ export async function addPaciente<T>(formValues: T): Promise<Paciente | undefine
 
 export async function updatePaciente<T>(id:string, formValues: T): Promise<boolean | undefined> {
     try {
-        const { data } = await axios.put(`${apiUrl}/api/pacientes/${id}`, formValues);
+        const { data } = await axios.put(`${apiUrl}/api/pacientes/${id}`, formValues, {
+            headers: {
+                authorization: token ? token : ''
+            }
+        });
         const { updated } = data as PacienteUpdateResponse;
         return updated;
     } catch (error) {

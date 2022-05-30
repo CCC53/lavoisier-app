@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { Button } from 'reactstrap';
 import { DynamicTableContent } from '../../../types/ui';
 import { DynamicTable } from '../../ui/DynamicTable';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { deletePaciente, getPacientes } from '../../../helpers/paciente';
 import { Paciente } from '../../../types/paciente';
 import { NoDataMessage } from '../../ui/NoDataMessage';
@@ -42,13 +42,14 @@ export const PacientesPage = () => {
   const navigate = useNavigate();
   const [pacientes, setPacientes] = useState<Paciente[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const { pathname } = useLocation();
 
   const navigateToPaciente = (id: string): void => {
-    navigate(`/pacientes/${id}`);
+    navigate(`${pathname}/${id}`);
   }
   
   const navigateToNew = (): void => {
-    navigate('/pacientes/nuevo');
+    navigate(`${pathname}/nuevo`);
   }
 
   const deleteButton = (id: string): void => {
@@ -62,14 +63,17 @@ export const PacientesPage = () => {
       confirmButtonText: 'Aceptar',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
-      if (result.isConfirmed) {
-        setPacientes(pacientes.filter(item => item.id !== id));
+      if(result.isConfirmed) {
         deletePaciente(id).then(res => {
-          Swal.fire(
-            'Eliminado',
-            'Este registro ha sido eliminado',
-            'success'
-          )
+          Swal.fire({
+            title: 'Eliminado',
+            text: 'Este registro ha sido eliminado',
+            icon: 'success',
+          }).then((result) => {
+            if(result.isConfirmed) {
+              setPacientes(pacientes.filter(item => item.id !== id));
+            }
+          })
         });
       }
     })
