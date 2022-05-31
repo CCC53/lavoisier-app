@@ -8,13 +8,17 @@ import { Cita } from '../../../types/cita';
 import { DynamicTableContent } from '../../../types/ui';
 import Swal from 'sweetalert2';
 import { NoDataMessage } from '../../ui/NoDataMessage';
+import moment from 'moment';
+import 'moment/locale/es-mx';
+
+moment.locale('es-mx');
 
 const formatTable = (citas: Cita[]) => {
   return citas.map(({ fecha, horario, motivo }, index) => (
     <tr key={index}>
       <td>{index+1}</td>
       <td>{motivo}</td>
-      <td>{fecha}</td>
+      <td>{moment(fecha).format('LL')}</td>
       <td>{horario}</td>
     </tr>
   ));
@@ -54,8 +58,7 @@ export const PacientePage = () => {
     Swal.fire({
       icon: 'success',
       title: message,
-      showConfirmButton: false,
-      timer: 1500
+      showConfirmButton: true,
     });
   }
 
@@ -65,15 +68,23 @@ export const PacientePage = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    Swal.fire({
+      allowOutsideClick: false,
+      icon: 'info',
+      text: 'Espere por favor...'
+    });
+    Swal.showLoading();
     if (id && id !== 'nuevo') {
       updatePaciente(id, formValues).then(res => {
         if (res) {
+          Swal.close();
           displayMessage(`${formValues.nombre} ha sido actualizado correctamente`);
         }
       });
     } else {
       addPaciente(formValues).then(res => {
         if (res) {
+          Swal.close();
           displayMessage('Paciente registrado correctamente');
           navigate(`/${rol}/${ruta}/${res.id}`);
         }

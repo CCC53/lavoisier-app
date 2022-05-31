@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { AuthRouter } from './AuthRouter';
-import { RecepcionistaRouter } from './RecepcionistaRouter';
-import { NutriologoRouter } from './NutriologoRouter';
 import { PublicRoutes } from './PublicRoutes';
 import { PrivateRoutes } from './PrivateRoutes';
 import { isLogged } from '../helpers/auth';
+import { NutriologoRouter } from './nutriologo/NutriologoRouter';
+import { RecepcionistaRouter } from './recepcionista/RecepcionistaRouter';
 
 export const AppRouter = () => {
 
@@ -35,11 +35,7 @@ export const AppRouter = () => {
           <RecepcionistaRouter/>
         </PrivateRoutes>
       }/>
-      {/* <Route path='*' element={
-        <PublicRoutes token={token}>
-          <AuthRouter/>
-        </PublicRoutes>
-      }/> */}
+      <Route path='*' element={<Navigate to={'auth'}/>}/>
     </Routes>
   )
 }

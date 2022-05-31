@@ -2,7 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { Button, Form, Input } from 'reactstrap'
 import { useForm } from '../../hooks/useForm';
-import { initLogin, decodeToken } from '../../helpers/auth';
+import { initLogin } from '../../helpers/auth';
+import Swal from 'sweetalert2';
 
 export const LoginPage = () => {
 
@@ -16,15 +17,16 @@ export const LoginPage = () => {
   
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    Swal.fire({
+      allowOutsideClick: false,
+      icon: 'info',
+      text: 'Espere por favor...'
+    });
+    Swal.showLoading();
     initLogin(email, password).then(res => {
       if (res) {
-        const { personal } = decodeToken(res.token);
-        const { rol } = personal;
-        if (rol === 'N') {
-          window.location.reload();
-        } else if (rol === 'R') {
-          window.location.reload();
-        }
+        Swal.close();
+        window.location.reload();
       }
     });
   }

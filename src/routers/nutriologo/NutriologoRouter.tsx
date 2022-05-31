@@ -1,9 +1,10 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { HistorialClinicoPage } from '../components/nutriologo/HistorialClinicoPage';
-import { Navigation } from '../components/ui/Navigation';
-import { CitasRouter } from './core/CitasRouter';
-import { PacientesRouter } from './core/PacientesRouter';
+import { HistorialClinicoPage } from '../../components/nutriologo/HistorialClinicoPage';
+import { Navigation } from '../../components/ui/Navigation';
+import { CitasRouter } from '../core/CitasRouter';
+import { PacientesRouter } from '../core/PacientesRouter';
+
 
 export const NutriologoRouter = () => {
   return (

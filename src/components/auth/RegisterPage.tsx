@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Form, Input } from 'reactstrap';
-import { decodeToken, initRegister } from '../../helpers/auth';
+import Swal from 'sweetalert2';
+import { initRegister } from '../../helpers/auth';
 import { useForm } from '../../hooks/useForm';
 
 export const RegisterPage = () => {
@@ -18,15 +19,16 @@ export const RegisterPage = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    Swal.fire({
+      allowOutsideClick: false,
+      icon: 'info',
+      text: 'Espere por favor...'
+    });
+    Swal.showLoading();
     initRegister(formValues).then(res => {
       if (res) {
-        const { personal } = decodeToken(res.token);
-        const { rol } = personal;
-        if (rol === 'N') {
-          window.location.reload();
-        } else if (rol === 'R') {
-          window.location.reload();
-        }
+        Swal.close();
+        window.location.reload();
       }
     });
   }

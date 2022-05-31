@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
-import { Button } from 'reactstrap';
+import { Button, Col, Input } from 'reactstrap';
 import { DynamicTableContent } from '../../../types/ui';
 import { DynamicTable } from '../../ui/DynamicTable';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { deletePaciente, getPacientes } from '../../../helpers/paciente';
 import { Paciente } from '../../../types/paciente';
 import { NoDataMessage } from '../../ui/NoDataMessage';
 import { LoadingMessage } from '../../ui/LoadingMessage';
+import { useForm } from '../../../hooks/useForm';
 
 const formatTable = (rows: Paciente[], navigate: (id: string) => void, deleteAction: (id: string) => void): JSX.Element[] => {
   return rows.map(({email, nombre, id, telefono}, index) => (
@@ -41,8 +42,13 @@ const setTableData = (data: Paciente[], navigate: (id: string) => void, deleteAc
 export const PacientesPage = () => {
   const navigate = useNavigate();
   const [pacientes, setPacientes] = useState<Paciente[]>([]);
+  const [data, setData] = useState<Paciente[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const { pathname } = useLocation();
+  const [formValues, handleInputChange] = useForm({
+    search: ''
+  })
+  const { search } = formValues;
 
   const navigateToPaciente = (id: string): void => {
     navigate(`${pathname}/${id}`);
@@ -79,6 +85,14 @@ export const PacientesPage = () => {
     })
   }
 
+  const handleSearch = () => {
+    setPacientes(pacientes.filter(item => item.nombre.toLowerCase().includes(search.toLowerCase().trim())));
+  };
+
+  const handleCloseSearch = () => {
+    setPacientes(data);
+  }
+
   const { headers, rows } = setTableData(pacientes, navigateToPaciente, deleteButton);
 
   useEffect(() => {
@@ -86,6 +100,7 @@ export const PacientesPage = () => {
       if (res) {
         setTimeout(() => {
           setPacientes(res);
+          setData(res);
           setLoading(false);
         }, 200);
       }
@@ -96,7 +111,20 @@ export const PacientesPage = () => {
     <div className='container'>
       <h1>Pacientes</h1>
       <hr/>
-      <Button color="primary" onClick={navigateToNew}>Agregar</Button>
+      <div className='subHeader'>
+        <Button color="primary" onClick={navigateToNew}>Agregar</Button>
+        <Col md={3}>
+          <Input placeholder='Buscar' name='search' value={search} onChange={handleInputChange}/>
+        </Col>
+        <div className='searchContainer'>
+          <Button color='success' onClick={handleSearch}>
+            <i className='fa fa-search'></i>
+          </Button>
+          <Button color='danger' onClick={handleCloseSearch}>
+            <i className='fa fa-times'></i>
+          </Button>
+        </div>
+      </div>
       {
         loading ? <LoadingMessage/> : pacientes.length === 0 ? <NoDataMessage/> : <DynamicTable headers={headers} rows={rows}/>
       }

@@ -89,3 +89,25 @@ h1 {
 .logoutButton {
     margin-top: 40em;
 }
+
+.subHeader {
+    display: flex;
+    justify-content: space-between;
+    .searchContainer {
+        margin-left: -50em;
+        button {
+            margin-right: 0.3em;
+        }
+    }
+}
+
+.filterContainer {
+    margin-top: 2em;
+}
+
+.paymentContainer {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 3em;
+}
