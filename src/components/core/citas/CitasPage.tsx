@@ -157,9 +157,9 @@ export const CitasPage = () => {
       <div className='filterContainer'>
         <ButtonToolbar>
           <ButtonGroup>
-            <Button outline={true} color='info' onClick={filterTodayCitas}>Citas de hoy</Button>
-            <Button outline={true} color='info' onClick={filterAllCitas}>Todas las citas</Button>
-            <Button outline={true} color='info' onClick={filterNextCitas}>Citas del dia siguiente</Button>
+            <Button outline={true} color='success' onClick={filterTodayCitas}>Citas de hoy</Button>
+            <Button outline={true} color='success' onClick={filterAllCitas}>Todas las citas</Button>
+            <Button outline={true} color='success' onClick={filterNextCitas}>Citas del dia siguiente</Button>
           </ButtonGroup>
         </ButtonToolbar>
       </div>

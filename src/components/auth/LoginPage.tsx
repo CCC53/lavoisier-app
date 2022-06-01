@@ -6,12 +6,11 @@ import { initLogin } from '../../helpers/auth';
 import Swal from 'sweetalert2';
 
 export const LoginPage = () => {
-
   const initialState = {
     email: '',
     password: ''
   }
-  const [formValues, handleInputChange] = useForm(initialState);
+  const [formValues, handleInputChange, ,reset] = useForm(initialState);
   const { email, password  } = formValues;
   
   
@@ -27,9 +26,18 @@ export const LoginPage = () => {
       if (res) {
         Swal.close();
         window.location.reload();
+      } else {
+        Swal.close();
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Usuario o contraseña incorrectos'
+        });
+        reset(initialState);
       }
     });
   }
+  
   return (
     <div>
       <h4>Iniciar sesión</h4>

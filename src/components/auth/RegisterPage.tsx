@@ -6,7 +6,6 @@ import { initRegister } from '../../helpers/auth';
 import { useForm } from '../../hooks/useForm';
 
 export const RegisterPage = () => {
-
   const initialState = {
     nombre: '',
     telefono: '',

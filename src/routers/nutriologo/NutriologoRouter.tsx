@@ -1,9 +1,9 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { HistorialClinicoPage } from '../../components/nutriologo/HistorialClinicoPage';
 import { Navigation } from '../../components/ui/Navigation';
 import { CitasRouter } from '../core/CitasRouter';
 import { PacientesRouter } from '../core/PacientesRouter';
+import { HistorialClinicoRouter } from './HistorialClinicoRouter';
 
 
 export const NutriologoRouter = () => {
@@ -11,7 +11,7 @@ export const NutriologoRouter = () => {
     <div>
       <Navigation/>
       <Routes>
-          <Route path='historial-clinico/*' element={<HistorialClinicoPage/>} />
+          <Route path='historial-clinico/*' element={<HistorialClinicoRouter/>} />
           <Route path='pacientes/*' element={<PacientesRouter/>}/>
           <Route path='citas/*' element={<CitasRouter/>}/>
           <Route path='*' element={<Navigate to={'pacientes'}/>}/>

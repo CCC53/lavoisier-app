@@ -10,6 +10,8 @@ import Swal from 'sweetalert2';
 import { NoDataMessage } from '../../ui/NoDataMessage';
 import moment from 'moment';
 import 'moment/locale/es-mx';
+import { HistorialClinico } from '../../../types/historialClinico';
+import { getHistorialByPaciente } from '../../../helpers/historialClinico';
 
 moment.locale('es-mx');
 
@@ -43,6 +45,7 @@ export const PacientePage = () => {
   const { pathname } = useLocation();
   const [ , rol, ruta, ] = pathname.split('/');
   const [citas, setCitas] = useState<Cita[]>([]);
+  const [historial, setHistorial] = useState<HistorialClinico>();
   const [formValues, handleInputChange, loadData] = useForm({
     nombre: '',
     nacimiento: '',
@@ -101,6 +104,13 @@ export const PacientePage = () => {
           setCitas(citas);
         }
       });
+      if (rol === 'nutriologo') {
+        getHistorialByPaciente(id).then(res => {
+          if (res) {
+            setHistorial(res);
+          }
+        });
+      }
     }
   }, [id]);
   
@@ -163,6 +173,18 @@ export const PacientePage = () => {
             {
               citas.length === 0 ? <NoDataMessage/> : <DynamicTable headers={headers} rows={rows} />
             }
+          </div>
+        )
+      }
+      {
+        rol === 'nutriologo' && (
+          historial ? <div className='paymentContainer'>
+            <h3>Consultar historial</h3>
+            <Button color='success' onClick={() => navigate(`/nutriologo/historial-clinico/${historial.id}`)}>Consultar historial clinico</Button>
+          </div>
+          : <div className='paymentContainer'>
+            <h3>Registrar historial clinico</h3>
+            <Button color='danger' onClick={() => navigate('/nutriologo/historial-clinico/nuevo')}>Agregar historial clinico</Button>
           </div>
         )
       }
