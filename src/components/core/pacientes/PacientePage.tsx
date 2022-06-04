@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
-import { addPaciente, getPacienteByID, updatePaciente } from '../../../helpers/paciente';
 import { useForm } from '../../../hooks/useForm';
 import { DynamicTable } from '../../ui/DynamicTable';
-import { Cita } from '../../../types/cita';
 import { DynamicTableContent } from '../../../types/ui';
 import Swal from 'sweetalert2';
 import { NoDataMessage } from '../../ui/NoDataMessage';
 import moment from 'moment';
 import 'moment/locale/es-mx';
-import { HistorialClinico } from '../../../types/historialClinico';
-import { getHistorialByPaciente } from '../../../helpers/historialClinico';
+import { getHistorialByPaciente } from '../../../helpers/nutriologo/historialClinico';
+import { updatePaciente, addPaciente, getPacienteByID } from '../../../helpers/core/paciente';
+import { Cita } from '../../../types/core/cita';
+import { HistorialClinico } from '../../../types/nutriologo/historialClinico';
+import { AntropometicosTable } from '../../nutriologo/antropometria/AntropometicosTable';
+import { LaboratorialesTable } from '../../nutriologo/laboratorial/LaboratorialesTable';
 
 moment.locale('es-mx');
 
@@ -166,26 +168,46 @@ export const PacientePage = () => {
         </Form>
       </div>
       {
-        id !== 'nuevo' && (
-          <div className='citasContainer'>
-            <h1>Historial de citas</h1>
-            <hr/>
-            {
-              citas.length === 0 ? <NoDataMessage/> : <DynamicTable headers={headers} rows={rows} />
-            }
-          </div>
+        rol === 'recepcionista' && (
+          id !== 'nuevo' && (
+            <div className='citasContainer'>
+              <h1>Historial de citas</h1>
+              <hr/>
+              {
+                citas.length === 0 ? <NoDataMessage/> : <DynamicTable headers={headers} rows={rows} />
+              }
+            </div>
+          )
         )
       }
       {
         rol === 'nutriologo' && (
-          historial ? <div className='paymentContainer'>
-            <h3>Consultar historial</h3>
-            <Button color='success' onClick={() => navigate(`/nutriologo/historial-clinico/${historial.id}`)}>Consultar historial clinico</Button>
-          </div>
-          : <div className='paymentContainer'>
-            <h3>Registrar historial clinico</h3>
-            <Button color='danger' onClick={() => navigate('/nutriologo/historial-clinico/nuevo')}>Agregar historial clinico</Button>
-          </div>
+          id !== 'nuevo' && (
+            historial ? (
+              <div className='paymentContainer'>
+                <h1>Historial Clinico</h1>
+                <hr/>
+                <Button color='success' onClick={() => navigate(`/nutriologo/historial-clinico/${historial.id}`)}>Consultar historial clinico</Button>
+              </div>
+            )
+          : (
+            <div className='paymentContainer'>
+              <h1>Historial Clinico</h1>
+              <hr/>
+              <Button color='danger' onClick={() => navigate('/nutriologo/historial-clinico/nuevo')}>Agregar historial clinico</Button>
+            </div>
+            )
+          )
+        )
+      }
+      {
+        rol === 'nutriologo' && (
+          id && <AntropometicosTable pacienteId={id}/>
+        )
+      }
+      {
+        rol === 'nutriologo' && (
+          id && <LaboratorialesTable pacienteId={id}/>
         )
       }
     </div>

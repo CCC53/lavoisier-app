@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { SelectItem } from "../types/ui";
-import { getCitasSelect } from '../helpers/cita';
+import { getCitasSelect } from '../helpers/core/cita';
 
 export const useFetchCitas = () => {
     const initialState: SelectItem[] = [];

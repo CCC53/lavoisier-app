@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import { useForm } from '../../hooks/useForm';
 import { useFetchCitas } from '../../hooks/useFetchCitas';
-import { addPago, getPagoByID } from '../../helpers/pago';
+import { addPago, getPagoByID } from '../../helpers/recepcionista/pago';
 import Swal from 'sweetalert2';
 
 export const PagoPage = () => {

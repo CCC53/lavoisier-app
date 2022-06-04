@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
+import { getPacientesSelect } from '../helpers/core/paciente';
 import { SelectItem } from '../types/ui';
-import { getPacientesSelect } from '../helpers/paciente';
 
 export const useFetchPacientes = (): SelectItem[] => {
     const initialState: SelectItem[] = [];

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { token } from './cita';
-import { apiUrl } from './paciente';
-import { AddPagoResponse, PagoPopulatedResponse, PagoResponse, PagosResponse } from '../types/pago';
+import { AddPagoResponse, PagoPopulatedResponse, PagoResponse, PagosResponse } from '../../types/recepcionista/pago';
+import { token } from '../core/cita';
+import { apiUrl } from '../core/paciente';
 
 export const getAllPagos = async() => {
     try {

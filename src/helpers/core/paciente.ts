@@ -1,7 +1,8 @@
 import axios from "axios";
-import { SelectItem } from "../types/ui";
-import { AddPacienteResponse, GetPacienteResponse, PacienteDeletedResponse, PacientesResponse, PacienteUpdateResponse, Paciente, PacientePopulated } from '../types/paciente';
-import { token } from "./cita";
+import { Paciente, PacientesResponse, PacienteDeletedResponse, PacientePopulated, GetPacienteResponse,
+            AddPacienteResponse, PacienteUpdateResponse } from "../../types/core/paciente";
+import { SelectItem } from "../../types/ui";
+import { token } from './cita';
 
 export const apiUrl = 'http://localhost:3001';
 

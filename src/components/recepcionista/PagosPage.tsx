@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from 'reactstrap'
 import { useNavigate } from 'react-router-dom';
-import { getAllPagos } from '../../helpers/pago';
-import { Pago } from '../../types/pago';
+import { getAllPagos } from '../../helpers/recepcionista/pago';
 import { LoadingMessage } from '../ui/LoadingMessage';
 import { NoDataMessage } from '../ui/NoDataMessage';
 import { DynamicTable } from '../ui/DynamicTable';
 import { DynamicTableContent } from '../../types/ui';
+import { Pago } from '../../types/recepcionista/pago';
 
 const formatTable = (rows: Pago[], navigate: (id: string) => void): JSX.Element[] => {
   return rows.map(({id, tipoPago, metodoPago}, index) => (

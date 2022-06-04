@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { fileUploadResponse, GetHistorialesPopulated, HistorialClinicoRes, HistorialUpdateResponse } from '../types/historialClinico';
-import { token } from './cita';
-import { apiUrl } from './paciente';
+import { fileUploadResponse, GetHistorialesPopulated, HistorialClinicoRes, HistorialUpdateResponse } from '../../types/nutriologo/historialClinico';
+import { token } from '../core/cita';
+import { apiUrl } from '../core/paciente';
 
 export async function addHistorialClinico<T>(formData: T) {
     try {

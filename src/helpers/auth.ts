@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { jwtPayload, LoginResponse } from '../types/auth';
-import { apiUrl } from './paciente';
 import jwtDecode  from 'jwt-decode';
+import { apiUrl } from './core/paciente';
 
 export const initLogin = async(email: string, password: string) => {
     try {

@@ -1,4 +1,4 @@
-import { Paciente } from './paciente';
+import { Paciente } from "../core/paciente";
 
 export interface fileUploadResponse {
     format: string;

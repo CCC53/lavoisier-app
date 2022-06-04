@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, ButtonGroup, ButtonToolbar, Col, Input } from 'reactstrap';
 import { DynamicTable } from '../../ui/DynamicTable';
-import { getAllCitas, deleteCita } from '../../../helpers/cita';
-import { Cita } from '../../../types/cita';
+import { getAllCitas, deleteCita } from '../../../helpers/core/cita';
 import { DynamicTableContent } from '../../../types/ui';
 import Swal from 'sweetalert2';
 import { NoDataMessage } from '../../ui/NoDataMessage';
@@ -11,6 +10,7 @@ import { LoadingMessage } from '../../ui/LoadingMessage';
 import { useForm } from '../../../hooks/useForm';
 import moment from 'moment';
 import 'moment/locale/es-mx';
+import { Cita } from '../../../types/core/cita';
 
 moment.locale('es-mx');
 

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Col, Input } from 'reactstrap';
-import { getAllHistoriales } from '../../helpers/historialClinico';
-import { useForm } from '../../hooks/useForm';
-import { HistorialClinicoPopulated } from '../../types/historialClinico';
-import { DynamicTableContent } from '../../types/ui';
-import { DynamicTable } from '../ui/DynamicTable';
-import { LoadingMessage } from '../ui/LoadingMessage';
-import { NoDataMessage } from '../ui/NoDataMessage';
+import { getAllHistoriales } from '../../../helpers/nutriologo/historialClinico';
+import { useForm } from '../../../hooks/useForm';
+import { HistorialClinicoPopulated } from '../../../types/nutriologo/historialClinico';
+import { DynamicTableContent } from '../../../types/ui';
+import { DynamicTable } from '../../ui/DynamicTable';
+import { LoadingMessage } from '../../ui/LoadingMessage';
+import { NoDataMessage } from '../../ui/NoDataMessage';
 
 const formatTable = (rows: HistorialClinicoPopulated[], navigate: (id: string) => void): JSX.Element[] => {
   return rows.map(({id, paciente, sedentarismo, alcoholismo, tabaquismo}, index) => (

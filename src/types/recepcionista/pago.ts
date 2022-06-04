@@ -1,4 +1,5 @@
-import { Cita } from './cita';
+import { Cita } from "../core/cita";
+
 
 export interface Pago {
     id: string;

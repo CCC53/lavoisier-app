@@ -1,9 +1,9 @@
-import axios from "axios"
-import { Cita, CitaPopulated, GetCitaResponse, GetCitasResponse, AddCitaResponse, DeleteCitaResponse, UpdateCitaResponse } from '../types/cita';
-import { SelectItem } from "../types/ui";
-import { apiUrl } from "./paciente";
+import axios from "axios";
+import { SelectItem } from "../../types/ui";
 import moment from 'moment';
 import 'moment/locale/es-mx';
+import { apiUrl } from "./paciente";
+import { CitaPopulated, GetCitaResponse, Cita, GetCitasResponse, AddCitaResponse, UpdateCitaResponse, DeleteCitaResponse } from "../../types/core/cita";
 
 moment.locale('es-mx');
 

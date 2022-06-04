@@ -2,10 +2,9 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Card, CardBody, CardText, CardTitle, Col, Form, FormGroup, Input, Label, Row } from 'reactstrap';
 import Swal from 'sweetalert2';
-import { addHistorialClinico, getHistorialByID, alimentacionFileUpload, updateHistorial } from '../../helpers/historialClinico';
-import { useFetchPacientes } from '../../hooks/useFetchPacientes';
-import { useForm } from '../../hooks/useForm';
-import { fileUploadResponse } from '../../types/historialClinico';
+import { addHistorialClinico, getHistorialByID, alimentacionFileUpload, updateHistorial } from '../../../helpers/nutriologo/historialClinico';
+import { useFetchPacientes } from '../../../hooks/useFetchPacientes';
+import { useForm } from '../../../hooks/useForm';
 
 const displayMessage = (message: string): void => {
   Swal.fire({
@@ -222,13 +221,17 @@ export const HistorialClinicoPage = () => {
               </FormGroup>
               <Button color='primary' onClick={handleUpload}>Cargar</Button>
             </Col>
-            <Card body className='mt-4'>
-              <CardBody>
-                <CardTitle tag="h5">Documento de alimentacion</CardTitle>
-                <CardText>Dieta establecida</CardText>
-                <a href={alimentacion} target={'_blank'}>Ver documento</a>
-              </CardBody>
-            </Card>
+            {
+              alimentacion.length > 2 && (
+                <Card body className='mt-4'>
+                  <CardBody>
+                    <CardTitle tag="h5">Documento de alimentacion</CardTitle>
+                    <CardText>Dieta establecida</CardText>
+                    <a href={alimentacion} target={'_blank'}>Ver documento</a>
+                  </CardBody>
+                </Card>
+              )
+            }
           </div>
           )
         }

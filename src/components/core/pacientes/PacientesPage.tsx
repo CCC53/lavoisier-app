@@ -4,11 +4,11 @@ import { Button, Col, Input } from 'reactstrap';
 import { DynamicTableContent } from '../../../types/ui';
 import { DynamicTable } from '../../ui/DynamicTable';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { deletePaciente, getPacientes } from '../../../helpers/paciente';
-import { Paciente } from '../../../types/paciente';
 import { NoDataMessage } from '../../ui/NoDataMessage';
 import { LoadingMessage } from '../../ui/LoadingMessage';
 import { useForm } from '../../../hooks/useForm';
+import { deletePaciente, getPacientes } from '../../../helpers/core/paciente';
+import { Paciente } from '../../../types/core/paciente';
 
 const formatTable = (rows: Paciente[], navigate: (id: string) => void, deleteAction: (id: string) => void): JSX.Element[] => {
   return rows.map(({email, nombre, id, telefono}, index) => (

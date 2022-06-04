@@ -1,7 +1,7 @@
-import React from 'react'
-import { HistorialesClinicosPage } from '../../components/nutriologo/HistorialesClinicosPage';
-import { HistorialClinicoPage } from '../../components/nutriologo/HistorialClinicoPage';
+import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { HistorialClinicoPage } from '../../components/nutriologo/historialClinico/HistorialClinicoPage';
+import { HistorialesClinicosPage } from '../../components/nutriologo/historialClinico/HistorialesClinicosPage';
 
 export const HistorialClinicoRouter = () => {
   return (
