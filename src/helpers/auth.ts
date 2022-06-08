@@ -40,10 +40,8 @@ export const isLogged = () => {
         return null;
     } else {
         const { exp } = decodeToken(tokenSaved);
-        const dateExpire = new Date();
-        dateExpire.setTime(exp);
-        if (dateExpire > new Date()) {
-            localStorage.removeItem('token');
+        const dateExpire = new Date(exp*1000);
+        if (dateExpire < new Date()) {
             return null;
         } else {
             return tokenSaved;

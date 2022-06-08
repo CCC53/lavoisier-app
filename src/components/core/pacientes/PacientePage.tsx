@@ -202,12 +202,12 @@ export const PacientePage = () => {
       }
       {
         rol === 'nutriologo' && (
-          id && <AntropometicosTable pacienteId={id}/>
+         id && id !== 'nuevo' && <AntropometicosTable pacienteId={id}/>
         )
       }
       {
         rol === 'nutriologo' && (
-          id && <LaboratorialesTable pacienteId={id}/>
+          id && id !== 'nuevo' && <LaboratorialesTable pacienteId={id}/>
         )
       }
     </div>
