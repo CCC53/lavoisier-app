@@ -4,7 +4,8 @@ import { Paciente, PacientesResponse, PacienteDeletedResponse, PacientePopulated
 import { SelectItem } from "../../types/ui";
 import { token } from './cita';
 
-export const apiUrl = 'http://localhost:3001';
+// URL de la API en desarrollo
+export const apiUrl =  process.env.NODE_ENV === 'development' ? 'http://localhost:3001' : 'https://centron-nl.herokuapp.com';
 
 export const getPacientes = async(): Promise<Paciente[] | undefined> => {
     try {
