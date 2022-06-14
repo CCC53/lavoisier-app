@@ -1,4 +1,3 @@
-
 export interface Antropometria {
     id: string;
     fecha: string;

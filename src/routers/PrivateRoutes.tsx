@@ -10,14 +10,7 @@ interface Props {
 const selectRol = (token: string, children: JSX.Element) => {
     const { personal } = decodeToken(token);
     const { rol } = personal;
-    switch (rol) {
-        case 'N':
-            return children;
-        case 'R':
-            return children;    
-        default:
-            return <Navigate to={'/auth'}/> 
-    }
+    return rol === 'N' || rol === 'R' ? children : <Navigate to={'/auth'}/>;
 }
 
 export const PrivateRoutes = ({token, children}: Props) => {
