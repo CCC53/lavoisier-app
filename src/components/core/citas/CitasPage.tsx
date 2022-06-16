@@ -126,12 +126,10 @@ export const CitasPage = () => {
   useEffect(() => {
     getAllCitas().then(res => {
       if (res) {
-        setTimeout(() => {
-          setCitas(res);
-          setData(res);
-          setBackup(res);
-          setLoading(false);
-        }, 200);
+        setCitas(res);
+        setData(res);
+        setBackup(res);
+        setLoading(false);
       }
     });
   }, []);

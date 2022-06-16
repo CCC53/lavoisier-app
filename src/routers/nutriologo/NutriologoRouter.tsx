@@ -5,7 +5,6 @@ import { CitasRouter } from '../core/CitasRouter';
 import { PacientesRouter } from '../core/PacientesRouter';
 import { HistorialClinicoRouter } from './HistorialClinicoRouter';
 
-
 export const NutriologoRouter = () => {
   return (
     <div>

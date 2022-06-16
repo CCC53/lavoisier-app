@@ -13,7 +13,6 @@ export const LoginPage = () => {
   const [formValues, handleInputChange, ,reset] = useForm(initialState);
   const { email, password  } = formValues;
   
-  
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     Swal.fire({

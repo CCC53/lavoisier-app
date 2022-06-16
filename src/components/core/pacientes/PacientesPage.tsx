@@ -98,11 +98,9 @@ export const PacientesPage = () => {
   useEffect(() => {
     getPacientes().then(res => {
       if (res) {
-        setTimeout(() => {
-          setPacientes(res);
-          setData(res);
-          setLoading(false);
-        }, 200);
+        setPacientes(res);
+        setData(res);
+        setLoading(false);
       }
     });
   }, [])
