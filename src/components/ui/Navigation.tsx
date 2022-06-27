@@ -4,9 +4,7 @@ import { Button, Navbar, NavbarBrand, Offcanvas, OffcanvasBody, OffcanvasHeader 
 import { NavRoute } from '../../types/ui';
 import { initLogout } from '../../helpers/auth';
 
-
 export const Navigation = () => {
-
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [, rol, ] = pathname.split('/');
