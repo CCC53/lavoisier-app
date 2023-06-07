@@ -24,8 +24,8 @@ export async function initRegister<T>(formData: T) {
         localStorage.setItem('token', token);
         return response;
     } catch (error) {
-        console.log(error);
-        return null;
+        let p = error as any;
+        return p.response.data.error.detail as string;
     }
 };
 

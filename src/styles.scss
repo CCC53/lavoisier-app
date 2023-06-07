@@ -110,3 +110,20 @@ h1 {
     display: flex;
     flex-direction: column;
 }
+
+.input-group {
+    margin: 1em 0em;
+    display: flex;
+}
+
+.input {
+    width: 100% !important;
+}
+
+.alert {
+    color: red;
+    padding: 0 !important;
+    padding-left: 0.5em !important;
+    margin-bottom: 0 !important;
+    padding-top: 0.3em !important;
+}
