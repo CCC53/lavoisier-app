@@ -7,6 +7,7 @@ import { addCita, getCitaByID, updateCita } from '../../../helpers/core/cita';
 import Swal from 'sweetalert2';
 import { getPagoByCita } from '../../../helpers/recepcionista/pago';
 import { PagoQueryBuilder } from '../../../types/recepcionista/pago';
+import { valdiateCitaEmptyData } from '../../../validators/core';
 
 export const CitaPage = () => {
   const { id } = useParams();
@@ -123,7 +124,7 @@ export const CitaPage = () => {
               </FormGroup>
             </Col>
           </Row>
-          <Button color='primary'>Registrar</Button>
+          <Button color='primary' disabled={valdiateCitaEmptyData(formValues)}>Registrar</Button>
         </Form>
       </div>
       {

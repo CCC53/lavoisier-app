@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { addHistorialClinico, getHistorialByID, alimentacionFileUpload, updateHistorial } from '../../../helpers/nutriologo/historialClinico';
 import { useFetchPacientes } from '../../../hooks/useFetchPacientes';
 import { useForm } from '../../../hooks/useForm';
+import { validateHistorialEmptyData } from '../../../validators/historialClinico';
 
 const displayMessage = (message: string): void => {
   Swal.fire({
@@ -15,6 +16,7 @@ const displayMessage = (message: string): void => {
 }
 
 export const HistorialClinicoPage = () => {
+  let fileRef: File | null = null;
   const navigate = useNavigate();
   const { id } = useParams();
   const selectItems = useFetchPacientes();
@@ -56,6 +58,7 @@ export const HistorialClinicoPage = () => {
   
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.currentTarget.files && e.currentTarget.files[0];
+    fileRef = file;
     Swal.fire({
       allowOutsideClick: false,
       icon: 'info',
@@ -208,7 +211,7 @@ export const HistorialClinicoPage = () => {
               </FormGroup>
             </Col>
           </Row>
-          <Button color='primary' hidden={id !== 'nuevo' ? true : false}>Registrar</Button>
+          <Button color='primary' hidden={id !== 'nuevo' ? true : false} disabled={validateHistorialEmptyData(formValues)}>Registrar</Button>
         </Form>
         {
           id !== 'nuevo' && (
@@ -219,7 +222,7 @@ export const HistorialClinicoPage = () => {
                 <Input type='file' onChange={handleFileChange}/>
                 <Label>Agregar archivo de alimentacion</Label>
               </FormGroup>
-              <Button color='primary' onClick={handleUpload}>Cargar</Button>
+              <Button color='primary' onClick={handleUpload} disabled={alimentacion.length == 0}>Cargar</Button>
             </Col>
             {
               alimentacion.length > 2 && (

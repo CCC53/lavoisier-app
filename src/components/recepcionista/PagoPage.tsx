@@ -5,6 +5,7 @@ import { useForm } from '../../hooks/useForm';
 import { useFetchCitas } from '../../hooks/useFetchCitas';
 import { addPago, getPagoByID } from '../../helpers/recepcionista/pago';
 import Swal from 'sweetalert2';
+import { validatePagoEmpty } from '../../validators/pago';
 
 export const PagoPage = () => {
   const { id } = useParams();
@@ -134,7 +135,7 @@ export const PagoPage = () => {
             </Col>
           </Row>
           {
-            id === 'nuevo' && <Button color='primary'>Registrar</Button>
+            id === 'nuevo' && <Button color='primary' disabled={validatePagoEmpty({ cantidadRecibida, citaId, metodoPago, monto, tipoPago })}>Registrar</Button>
           }
         </Form>
       </div>

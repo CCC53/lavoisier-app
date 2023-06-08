@@ -65,7 +65,7 @@ export const getPacienteByID = async(id: string): Promise<PacientePopulated | un
     }
 }
 
-export async function addPaciente<T>(formValues: T): Promise<Paciente | undefined> {
+export async function addPaciente<T>(formValues: T): Promise<Paciente | string> {
     try {
         const { data } = await axios.post(`${apiUrl}/api/pacientes`, formValues, {
             headers: {
@@ -75,8 +75,8 @@ export async function addPaciente<T>(formValues: T): Promise<Paciente | undefine
         const { paciente } = data as AddPacienteResponse;
         return paciente;
     } catch (error) {
-        console.log(error);
-        return undefined;
+        let p = error as any;
+        return p.response.data.error.detail as string;
     }
 }
 

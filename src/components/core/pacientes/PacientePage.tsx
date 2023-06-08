@@ -14,6 +14,8 @@ import { Cita } from '../../../types/core/cita';
 import { HistorialClinico } from '../../../types/nutriologo/historialClinico';
 import { AntropometicosTable } from '../../nutriologo/antropometria/AntropometicosTable';
 import { LaboratorialesTable } from '../../nutriologo/laboratorial/LaboratorialesTable';
+import { validatePacienteEmptyData } from '../../../validators/core';
+import { validateEmail, validateName, validatePhone } from '../../../validators/auth';
 
 moment.locale('es-mx');
 
@@ -88,10 +90,19 @@ export const PacientePage = () => {
       });
     } else {
       addPaciente(formValues).then(res => {
-        if (res) {
-          Swal.close();
-          displayMessage('Paciente registrado correctamente');
-          navigate(`/${rol}/${ruta}/${res.id}`);
+        if (typeof(res) === "string") {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: res,
+            showConfirmButton: true,
+          })
+        } else {
+          if (res) {
+            Swal.close();
+            displayMessage('Paciente registrado correctamente');
+            navigate(`/${rol}/${ruta}/${res.id}`);
+          }
         }
       });
     }
@@ -130,6 +141,7 @@ export const PacientePage = () => {
             < FormGroup floating>
                 <Input placeholder='Nombre del paciente' name='nombre' onChange={handleInputChange} value={nombre} />
                 <Label>Nombre del paciente</Label>
+                <span className='alert' hidden={validateName(nombre)}>Ingrese un nombre valido</span>
               </FormGroup>
             </Col>
             <Col md="4">
@@ -155,16 +167,18 @@ export const PacientePage = () => {
               <FormGroup floating>
                 <Input placeholder='Número de teléfono' name='telefono' onChange={handleInputChange} value={telefono} />
                 <Label>Número de teléfono</Label>
+                <span className='alert' hidden={validatePhone(telefono)}>Ingrese un numero de telefono válido</span>
               </FormGroup>
             </Col>
             <Col md="6">
               <FormGroup floating>
                 <Input placeholder='Email' name='email' type='email' onChange={handleInputChange} value={email} />
                 <Label>Email</Label>
+                <span className='alert' hidden={validateEmail(email)}>Ingrese un email válido</span>
               </FormGroup>
             </Col>
           </Row>
-          <Button color='primary'>Registrar</Button>
+          <Button color='primary' disabled={validatePacienteEmptyData(formValues)}>Registrar</Button>
         </Form>
       </div>
       {

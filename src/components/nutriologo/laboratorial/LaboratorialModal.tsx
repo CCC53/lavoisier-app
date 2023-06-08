@@ -4,6 +4,7 @@ import { useForm } from '../../../hooks/useForm';
 import { Laboratorial } from '../../../types/nutriologo/laboratorial';
 import { addLaboratorial, getLaboratorialByID, updateLaboratorial } from '../../../helpers/nutriologo/laboratorial';
 import { Button, Col, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader, Row } from 'reactstrap';
+import { validateEmptyLaboratorial } from '../../../validators/nutriologo';
 
 interface Props {
   isOpen: boolean;
@@ -150,7 +151,7 @@ export const LaboratorialModal = ({ isOpen, id, pacienteId, setOpen, laboratoria
               </FormGroup>
             </Col>
           </Row>
-          <Button color='primary'>Guardar</Button>
+          <Button color='primary' disabled={validateEmptyLaboratorial(formValues)}>Guardar</Button>
         </Form>
       </ModalBody>
     </Modal>

@@ -4,6 +4,7 @@ import { useForm } from '../../../hooks/useForm';
 import { addAntropometrico, getAntropometricoByID, updateAntropometrico } from '../../../helpers/nutriologo/antropometria';
 import Swal from 'sweetalert2';
 import { Antropometria } from '../../../types/nutriologo/antropometria';
+import { validateEmptyAntropometico } from '../../../validators/nutriologo';
 
 interface Props {
     isOpen: boolean;
@@ -169,7 +170,7 @@ export const AntropometricoModal = ({ isOpen, setOpen, id, pacienteId, antropome
                         </FormGroup>
                     </Col>
                 </Row>
-                <Button color='primary'>Guardar</Button>
+                <Button color='primary' disabled={validateEmptyAntropometico(formValues)}>Guardar</Button>
             </Form>
         </ModalBody>
     </Modal>

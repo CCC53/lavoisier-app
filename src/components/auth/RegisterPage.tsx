@@ -29,7 +29,8 @@ export const RegisterPage = () => {
       if (typeof(res) === "string") {
         Swal.fire({
           icon: 'error',
-          title: res,
+          title: 'Error',
+          text: res,
           showConfirmButton: true,
         })
       } else {

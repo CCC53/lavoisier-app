@@ -9,7 +9,7 @@ export const validatePassword = (password: string) => validator.isLength(passwor
 
 export const validatePhone = (phone: string) => validator.isEmpty(phone) || validator.isMobilePhone(phone, 'es-MX', { strictMode: true }) ? true : false;
 
-export const validateName = (name: string) => validator.isEmpty(name) || validator.isLength(name, { max: 20 }) ? true : false;
+export const validateName = (name: string) => validator.isEmpty(name) || validator.isLength(name, { max: 24 }) ? true : false;
 
 export interface RegisterFields {
     nombre: string;
